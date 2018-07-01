@@ -26,6 +26,7 @@ $(function () {
         var message = response.responseBody;
         try {
             var json = atmosphere.util.parseJSON(message);
+            console.info(json);
         } catch (e) {
             console.log('This doesn\'t look like a valid JSON: ', message);
             return;
@@ -36,9 +37,9 @@ $(function () {
             logged = true;
             status.text(myName + ': ').css('color', 'blue');
         } else {
-            var me = json.author == author;
-            var date =  typeof(json.time) == 'string' ? parseInt(json.time) : json.time;
-            addMessage(json.author, json.text, me ? 'blue' : 'black', new Date(date));
+            var me = json.event.usuarioOrigem.nome == author;
+            var date =  typeof(json.event.dtInclusao) == 'string' ? parseInt(json.event.dtInclusao) : json.event.dtInclusao;
+            addMessage(json.event.usuarioOrigem.nome, json.event.msg, me ? 'blue' : 'black', new Date(date));
         }
     };
 
